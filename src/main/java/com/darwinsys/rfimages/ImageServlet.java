@@ -39,6 +39,7 @@ public class ImageServlet extends HttpServlet {
 		String imageName = req.getPathInfo().substring(1); // Skip leading '/'
 		System.out.printf("ImageServlet.serveImage(%s)\n", imageName);
 		if (imageName == null || imageName.isEmpty()) {
+			System.out.println("ImageServlet: empty image path");
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
@@ -55,6 +56,15 @@ public class ImageServlet extends HttpServlet {
 		ServletContext cntx = req.getServletContext();
 		// Get the path of the image - XXX should be from a servlet init parameter!
 		String fileName = cntx.getRealPath("images" + "/" + imageName);
+
+		Path path = Path.of(fileName);
+
+		if (!Files.exists(path)) {
+			System.out.println("ImageServlet: File Not Found: " + fileName);
+			resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return;
+		}
+
 		// retrieve mimeType dynamically
 		String mime = cntx.getMimeType(fileName);
 		if (mime == null) {
@@ -64,7 +74,6 @@ public class ImageServlet extends HttpServlet {
 		}
 
 		resp.setContentType(mime);
-		Path path = Path.of(fileName);
 		resp.setContentLength((int)Files.size(path));
 
 		// Read the image file and write in binary as the response
