@@ -1,0 +1,41 @@
+= RainForest Images WebApp Demo
+
+This web app is set up to only serve the images
+for music, cd, dvd and similar, from the 
+Learning Tree Rainforest Store project or similar apps.
+
+This is a simple webapp created using SpringBoot Web Starter.
+Servlet config based upon answer in
+https://stackoverflow.com/questions/55978959/how-can-i-register-a-servlet-with-spring-boot[].
+
+== HowTo
+
+	mvn spring-boot:run
+
+or just
+
+	mvn
+
+Or, in Eclipse with Spring plugin (or "Spring Tool Suite"), 
+right-click project or Application.java, 
+then RunAs->Spring Boot Application
+
+Seconds later, connect to 
+
+	http://localhost:8070/
+
+and click the link for `image/demo.png`
+
+Note: that is port 8070, _not_ the usual 8080, to avoid conflicts.
+Change this in application.properties if you don't like it.
+
+== War Packaging for EE App Server Deployment
+
+This version has the modifications described in
+the section entitled "Traditional Deployment"--"Create a deployable war file" in
+the spring-boot reference manual (Section 85.1 as of
+this writing).
+It still works in Maven (`mvn package`) and can be run in Eclipse with these settings.
+For WildFly users, the packaged _war_ file has a jboss-web.xml config file
+so it deploys as _/rfimages when you simply copy the _war_ file to
+WILDFLYHOME/standalone/deployments.
