@@ -10,6 +10,16 @@ https://stackoverflow.com/questions/55978959/how-can-i-register-a-servlet-with-s
 
 == HowTo
 
+For a Learning Tree course, get the images by
+downloading the sibling repo `rainforestimagesdir`.
+Put it in C:/rainforestimagedir.
+
+For other applications of this project, get your own images someplace.
+
+If you aren't using the suggested image directory,
+change the setting in src/main/resources/application.properties.
+Now you can:
+
 	mvn spring-boot:run
 
 or just
@@ -18,7 +28,7 @@ or just
 
 Or, in Eclipse with Spring plugin (or "Spring Tool Suite"), 
 right-click project or Application.java, 
-then RunAs->Spring Boot Application
+then `RunAs->Spring Boot Application`
 
 Seconds later, connect to 
 

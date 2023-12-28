@@ -22,13 +22,13 @@ public class ImageServlet extends HttpServlet {
 	final static String[] baddies = {
 		";",
 		"'",
-		"/",
+		"..",
 		"\\",
 	};
 
 	@Override
 	public void init() {
-		System.out.println("ImageServlet initialized.");
+		System.err.println("ImageServlet initialized.");
 	}
 
 	/**
@@ -37,9 +37,9 @@ public class ImageServlet extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String imageName = req.getPathInfo().substring(1); // Skip leading '/'
-		System.out.printf("ImageServlet.serveImage(%s)\n", imageName);
+		System.err.printf("ImageServlet.doGet(%s)\n", imageName);
 		if (imageName == null || imageName.isEmpty()) {
-			System.out.println("ImageServlet: empty image path");
+			System.err.println("ImageServlet: empty image path");
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
@@ -47,26 +47,28 @@ public class ImageServlet extends HttpServlet {
 		// Basic sanitization
 		for (String bad : baddies) {
 			if (imageName.indexOf(bad) >= 0) {
-				System.out.println("ImageServlet: Invalid character(s) in " + imageName);
+				System.err.println("ImageServlet: Invalid character(s) %s in %s\n", bad, imageName);
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				return;
 			}
 		}
 
-		ServletContext cntx = req.getServletContext();
-		// Get the path of the image - XXX should be from a servlet init parameter!
-		String fileName = cntx.getRealPath("images" + "/" + imageName);
+		ServletContext ctx = req.getServletContext();
+		String imagesDir = ctx.getInitParameter("imageRoot");
+		System.err.println("context init param is " + imagesDir);
 
+		// Construct the path of the image
+		String fileName = imagesDir + "/" + imageName;
 		Path path = Path.of(fileName);
 
 		if (!Files.exists(path)) {
-			System.out.println("ImageServlet: File Not Found: " + fileName);
+			System.err.println("ImageServlet: File Not Found: " + fileName);
 			resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
 
 		// retrieve mimeType dynamically
-		String mime = cntx.getMimeType(fileName);
+		String mime = ctx.getMimeType(fileName);
 		if (mime == null) {
 			System.err.println("Failed to get MIME type for " + imageName);
 			resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
