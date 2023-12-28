@@ -24,9 +24,9 @@ Seconds later, connect to
 
 	http://localhost:8070/
 
-and click the link for `image/demo.png`
+and you should see a welcome page. You can click the link to see `image/demo.png` on its own.
 
-Note: that is port 8070, _not_ the usual 8080, to avoid conflicts.
+Note that we use port 8070, _not_ the usual 8080, to avoid conflicts.
 Change this in application.properties if you don't like it.
 
 == War Packaging for EE App Server Deployment

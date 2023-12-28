@@ -12,7 +12,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	 Do NOT upgrade spring-boot-* to 3.anything without tracking down the changes
 	 to the annotations needed; as it will FAIL SILENTLY (just giving 404 for any request)
 	 when run with 3.x. You have been warned! (At least, if you read before you leap).
-	 ->
+	 -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -50,8 +50,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			<version>6.1.0-M1</version>
 		</dependency>
 -->
-		<!-- Two deps on Tomcat, both must be scope runtime for Eclipse/Maven, and
-			*** both must be scope provided for war deployment.
+
+		<!-- Two deps on Tomcat, both must be in scope `runtime`for Eclipse/Maven, and
+			*** both must be in scope `provided` for war deployment.
 			-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
